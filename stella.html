@@ -1,0 +1,255 @@
+<head>
+    <title>merry christmas</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Mono">
+
+    <style>
+        :root {
+            --white: #f2f4f3;
+            --red: #fb3640;
+            --alpha-red: rgba(251, 54, 64, 0.3);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'PT Mono', monospace;
+        }
+
+        h3 {
+            font-weight: bold;
+            animation-name: text;
+            animation-duration: 5s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        p {
+            width: 80%;
+            background-color: var(--alpha-red);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        #root {
+            width: 100%;
+            height: auto;
+        }
+
+        .maggie, .poppy {
+            width: 100px;
+            height: auto;
+        }
+
+        .chester {
+            width: audio;
+            height: 100px;
+            animation-name: chester;
+        }
+
+        .maggie {
+            animation-name: maggie;
+        }
+
+        .poppy {
+            animation-name: poppy;
+        }
+
+        .chester, .maggie, .poppy {
+            animation-duration: 1.8s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            opacity: 0;
+        }
+
+        .animal {
+            height: 120px;
+            width: 120px;
+            padding: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #animal-grid {
+            display: grid;
+            width: fit-content;
+            height: fit-content;
+            grid-gap: 0px;
+            grid-template-columns: 1fr 1fr 1fr;
+            background-color: var(--alpha-red);
+            border-radius: 10px;
+        }
+
+        #page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            min-height: 100%;
+            height: auto;
+            background: repeating-linear-gradient(135deg, var(--red), var(--red) 100px, var(--white) 100px, var(--white) 200px);
+        }
+
+        @keyframes chester {
+            0% {
+                opacity: 1;
+                transform: rotateX(0deg);
+            }
+
+            100% {
+                opacity: 1;
+                transform: rotateX(360deg);
+            }
+        }
+
+        @keyframes maggie {
+            0% {
+                opacity: 1;
+                transform: rotateY(0deg);
+            }
+
+            100% {
+                opacity: 1;
+                transform: rotateY(360deg);
+            }
+        }
+
+        @keyframes poppy {
+            0% {
+                opacity: 1;
+                transform: rotateZ(0deg);
+            }
+
+            100% {
+                opacity: 1;
+                transform: rotateZ(360deg);
+            }
+        }
+
+        @keyframes text {
+            0% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(0.5);
+            }
+
+            75% {
+                transform: scale(1.5);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <script type="text/babel">
+        
+
+        class Animal extends React.Component {
+            constructor(props){
+                super(props);
+            }
+
+            render(){
+                return (
+                    <div className = 'animal' onClick = {this.props.action}><img className = {this.props.name} src = {this.props.name + '.png'} style = {{
+                        animationDelay: this.props.delay + 's'
+                    }}/> </div>
+                );
+            }
+        }
+
+        class Page extends React.Component {
+            constructor(props){
+                super(props);
+
+                this.state = {
+                    clickTitle: 'click on each animal for a special holiday message!',
+                    clickText: '',
+                    chester: false,
+                    maggie: false,
+                    poppy: false
+                }
+
+                this.chesterClick = this.chesterClick.bind(this);
+                this.maggieClick = this.maggieClick.bind(this);
+                this.poppyClick = this.poppyClick.bind(this);
+            }
+
+            chesterClick(){
+                this.setState({
+                    clickTitle: 'chanker says:',
+                    clickText: 'myoew',
+                    chester: true
+                });
+            }
+
+            maggieClick(){
+                this.setState({
+                    clickTitle: 'mangly says:',
+                    clickText: 'byte',
+                    maggie: true
+                });
+            }
+
+            poppyClick(){
+                this.setState({
+                    clickTitle: 'poap says:',
+                    clickText: 'mwonch',
+                    poppy: true
+                });
+            }
+
+            render(){
+                return (<div id = 'page'>
+                        <h1>merry christmas!</h1>
+
+                        <div id = 'animal-grid'>
+                            <Animal name='chester' delay = '0.2' action = {this.chesterClick}/>
+                            <Animal name='maggie' delay = '0.4' action = {this.maggieClick}/>
+                            <Animal name='poppy' delay = '0.6' action = {this.poppyClick}/>
+                            
+                            <Animal name='maggie' delay = '0.8' action = {this.maggieClick}/>
+                            <Animal name='poppy' delay = '1' action = {this.poppyClick}/>
+                            <Animal name='chester' delay = '1.2' action = {this.chesterClick}/>    
+                            
+                            <Animal name='poppy' delay = '1.4' action = {this.poppyClick}/>
+                            <Animal name='chester' delay = '1.6' action = {this.chesterClick}/>
+                            <Animal name='maggie' delay = '1.8' action = {this.maggieClick}/>
+                        </div>
+
+                        <h2>{this.state.clickTitle}</h2>
+                        <h3>{this.state.clickText}</h3>
+
+                        {this.state.chester && this.state.maggie && this.state.poppy && <p>
+                            anyway, it doesn't seem like the animals have a lot to say. merry christmas! it's been nice to be back home for the holidays;
+                            i've missed having you around, even if we mostly keep to ourselves. you are an amazing performer and artist and it's amazing to see 
+                            how quickly you are growing. i know you'll continue to do great things. i'm wishing you a pleasant holiday season and a prosperous
+                            2023! <br/>
+
+                            love weldon
+
+                        </p>}    
+                        
+                    </div>
+                );
+            }
+        }
+            
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Page/>);
+    </script>
+    <div id="root"></div>
+</body>
